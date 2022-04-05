@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+    
+        <record id="internal_requisition_stock_form_view" model="ir.ui.view">
+            <field name="name">stock.picking.form.view</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="stock.view_picking_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='priority']" position="after">
+                    <field name="custom_requisition_id"/>
+                </xpath>
+                
+<!--                 <xpath expr="//field[@name='date_delivery']" position="after">-->
+                 <xpath expr="//field[@name='scheduled_date']" position="after">
+                    <field name="requisition_type_id" readonly="1" force_save="1"  widget="selection"/>
+                </xpath>
+            </field>
+        </record>
+        
+        
+        
+         <record id="view_pickings_filter_group_inherit_requisitions" model="ir.ui.view">
+            <field name="name">view_pickings_filter_group_inherit_requisitions_type</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="stock.view_picking_internal_search"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='picking_type_id']" position="after">
+                <!-- <field name="requisition_type_id"   filter_domain="[('requisition_type_id.name', 'ilike', self)]"/> -->
+                   <separator/>
+                    <!-- <filter string="Requisition type claim" name="requisition_type_filter"  domain="[('requisition_type_id.name', '=', 'Claim')]"/>
+                   <filter string="Requisition type afs" name="requisition_type_filter_afs"  domain="[('requisition_type_id.name', '=', 'After Sales Service')]"/>
+                   <filter string="Requisition type cosc" name="requisition_type_filter_cosc"  domain="[('requisition_type_id.name', '=', 'Company Operated Service Center')]"/> -->
+                    <separator/>
+                </xpath>
+                <xpath expr="//group" position="inside">
+                    <separator/>
+                           <filter string="Requisition type" name="regquisition_type_filter_group" 
+                                     context="{'group_by': 'requisition_type_id'}"/>
+                     <separator/>                 
+                </xpath>
+            </field>
+        </record>
+        
+        
+        
+    </data>
+</odoo>
